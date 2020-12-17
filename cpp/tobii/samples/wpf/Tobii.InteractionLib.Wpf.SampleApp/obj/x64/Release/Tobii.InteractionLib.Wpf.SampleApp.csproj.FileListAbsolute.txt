@@ -1,0 +1,17 @@
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\bin\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.exe.config
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\bin\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.exe
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\bin\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.pdb
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\bin\x64\Release\tobii_interaction_lib_cs.dll
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\bin\x64\Release\tobii_interaction_lib_wpf.dll
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.csprojAssemblyReference.cache
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\MainWindow.baml
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\MainWindow.g.cs
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\App.g.cs
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp_MarkupCompile.cache
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.g.resources
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.Properties.Resources.resources
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.csproj.GenerateResource.cache
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.csproj.CoreCompileInputs.cache
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.csproj.CopyComplete
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.exe
+C:\Users\antho\projects\sr\interactionsdk\samples\wpf\Tobii.InteractionLib.Wpf.SampleApp\obj\x64\Release\Tobii.InteractionLib.Wpf.SampleApp.pdb

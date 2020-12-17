@@ -1,0 +1,84 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <IsWindows>false</IsWindows> 
+    <IsOSX>false</IsOSX>
+    <IsLinux>false</IsLinux>
+
+    <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+	  <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+	  <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <CurrentPlatform>x64</CurrentPlatform>
+    <CurrentPlatform Condition="'$(RuntimeIdentifier)' == 'win-x86'">x86</CurrentPlatform>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <LibPath>../../lib/$(CurrentPlatform)</LibPath>
+    <LibPath Condition="'$(BuildLibPath)' != ''">$(BuildLibPath)</LibPath>
+  </PropertyGroup>
+  
+  <ItemGroup>
+	  <Compile Include="cs_sample.cs"/>
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(IsWindows)">
+    <Reference Include="tobii_interaction_lib_cs.dll">
+      <HintPath>$(LibPath)/tobii_interaction_lib_cs.dll</HintPath>
+    </Reference>
+    <Content Include="$(LibPath)/tobii_interaction_lib_c.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/tobii_interaction_lib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/tobii_stream_engine.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+	
+	<ItemGroup Condition="$(IsOSX)">
+    <Reference Include="tobii_interaction_lib_cs.dll">
+      <HintPath>$(LibPath)/tobii_interaction_lib_cs.dll</HintPath>
+    </Reference>
+    <Content Include="$(LibPath)/libtobii_interaction_lib_c.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/libtobii_interaction_lib.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/libtobii_stream_engine.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+	
+	<ItemGroup Condition="$(IsLinux)">
+    <Reference Include="tobii_interaction_lib_cs.dll">
+      <HintPath>$(LibPath)/tobii_interaction_lib_cs.dll</HintPath>
+    </Reference>
+    <Content Include="$(LibPath)/libtobii_interaction_lib_c.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/libtobii_interaction_lib.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/libtobii_stream_engine.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

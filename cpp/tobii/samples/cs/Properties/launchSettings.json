@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "cs_sample": {
+      "commandName": "Project",
+      "commandLineArgs": " /Platform:x64",
+      "nativeDebugging": true
+    }
+  }
+}

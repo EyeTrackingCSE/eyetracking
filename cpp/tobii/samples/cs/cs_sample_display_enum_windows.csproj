@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CurrentPlatform>x64</CurrentPlatform>
+    <CurrentPlatform Condition="'$(RuntimeIdentifier)' == 'win-x86'">x86</CurrentPlatform>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <LibPath>../../lib/$(CurrentPlatform)</LibPath>
+    <LibPath Condition="'$(BuildLibPath)' != ''">$(BuildLibPath)</LibPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DispEnumHelperPath>../../include/DisplayEnumerationHelper</DispEnumHelperPath>
+    <DispEnumHelperPath Condition="'$(BuildDispEnumHelperPath)' != ''">$(BuildDispEnumHelperPath)</DispEnumHelperPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <Compile Include="cs_sample_display_enum_windows.cs"/>
+	  <Compile Include="$(DispEnumHelperPath)/DisplayEnumerationHelper.cs"/>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="tobii_interaction_lib_cs.dll">
+      <HintPath>$(LibPath)/tobii_interaction_lib_cs.dll</HintPath>
+    </Reference>
+    <Content Include="$(LibPath)/tobii_interaction_lib_c.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/tobii_interaction_lib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(LibPath)/tobii_stream_engine.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

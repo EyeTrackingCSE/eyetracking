@@ -1,0 +1,221 @@
+a {
+	color: blue;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.contents a:visited {
+	color: blue;
+}
+
+a.el {
+	font-weight: normal;
+}
+
+a.code, a.code:visited, a.line, a.line:visited {
+	color: #839ac9; 
+}
+
+a.codeRef, a.codeRef:visited, a.lineRef, a.lineRef:visited {
+	color: #839ac9; 
+}
+
+pre.fragment {        
+        /*border: 1px solid #C4CFE5;*/
+        border: 1px solid #edf1f7;
+        /**/
+        background-color: #FBFCFD;
+        /*padding: 4px 6px;*/
+        padding: 8px 8px 8px 8px;
+        /**/
+        /*margin: 4px 8px 4px 2px;*/
+        margin: 0;
+        /**/
+        overflow: auto;
+        word-wrap: break-word;
+
+        /*
+        font-size:  9pt;
+        line-height: 125%;
+        font-family: monospace, fixed;
+        font-size: 105%;
+        */
+        font-size: 13px;
+	line-height: 1.0;
+        font-family: monospace, fixed;
+        /**/
+}
+
+div.fragment {
+  /*padding: 0 0 1px 0;*/
+  padding: 8px 8px 8px 8px;
+  /**/
+  /*margin: 4px 8px 4px 2px;*/
+  margin: 0;
+  /**/
+  background-color: #FBFCFD;
+  /*border: 1px solid #C4CFE5;*/
+  border: 1px solid #edf1f7;
+  /**/
+}
+
+div.line {
+	font-family: monospace, fixed;
+        font-size: 13px;
+	min-height: 13px;
+	line-height: 1.0;
+	text-wrap: unrestricted;
+	white-space: -moz-pre-wrap; /* Moz */
+	white-space: -pre-wrap;     /* Opera 4-6 */
+	white-space: -o-pre-wrap;   /* Opera 7 */
+	white-space: pre-wrap;      /* CSS3  */
+	word-wrap: break-word;      /* IE 5.5+ */
+	text-indent: -53px;
+	padding-left: 53px;
+	padding-bottom: 0px;
+	margin: 0px;
+	-webkit-transition-property: background-color, box-shadow;
+	-webkit-transition-duration: 0.5s;
+	-moz-transition-property: background-color, box-shadow;
+	-moz-transition-duration: 0.5s;
+	-ms-transition-property: background-color, box-shadow;
+	-ms-transition-duration: 0.5s;
+	-o-transition-property: background-color, box-shadow;
+	-o-transition-duration: 0.5s;
+	transition-property: background-color, box-shadow;
+	transition-duration: 0.5s;
+}
+
+div.line:after {
+    content:"\000A";
+    white-space: pre;
+}
+
+div.line.glow {
+	background-color: cyan;
+	box-shadow: 0 0 10px cyan;
+}
+
+
+span.lineno {
+	padding-right: 4px;
+	text-align: right;
+	border-right: 2px solid #0F0;
+	background-color: #E8E8E8;
+        white-space: pre;
+}
+span.lineno a {
+	background-color: #D8D8D8;
+}
+
+span.lineno a:hover {
+	background-color: #C8C8C8;
+}
+
+span.keyword {
+        color: blue;
+        font-weight: bold
+}
+
+span.keywordtype {
+	color: #8080ff;
+        font-weight: bold
+}
+
+span.keywordflow {
+        color: #6b00e0;
+        font-weight: bold
+}
+
+span.comment {
+	color: #008000
+}
+
+span.preprocessor {
+	color: #ff6666
+}
+
+span.stringliteral {
+	color: #ff33ff
+}
+
+span.charliteral {
+	color: #ff33ff
+}
+
+/* @group Markdown */
+
+/*
+table.markdownTable {
+	border-collapse:collapse;
+        margin-top: 4px;
+        margin-bottom: 4px;
+}
+
+table.markdownTable td, table.markdownTable th {
+	border: 1px solid #2D4068;
+	padding: 3px 7px 2px;
+}
+
+table.markdownTableHead tr {
+}
+
+table.markdownTableBodyLeft td, table.markdownTable th {
+	border: 1px solid #2D4068;
+	padding: 3px 7px 2px;
+}
+
+th.markdownTableHeadLeft th.markdownTableHeadRight th.markdownTableHeadCenter th.markdownTableHeadNone {
+	background-color: #374F7F;
+	color: #FFFFFF;
+	font-size: 110%;
+	padding-bottom: 4px;
+	padding-top: 5px;
+}
+
+th.markdownTableHeadLeft {
+	text-align: left
+}
+
+th.markdownTableHeadRight {
+	text-align: right
+}
+
+th.markdownTableHeadCenter {
+	text-align: center
+}
+*/
+
+table.markdownTable {
+	border-collapse:collapse;
+        margin-top: 4px;
+        margin-bottom: 4px;
+}
+
+table.markdownTable td, table.markdownTable th {
+	border: 1px solid #2D4068;
+	padding: 3px 7px 2px;
+}
+
+table.markdownTable tr {
+}
+
+th.markdownTableHeadLeft, th.markdownTableHeadRight, th.markdownTableHeadCenter, th.markdownTableHeadNone {
+	background-color: #374F7F;
+	color: #FFFFFF;
+	font-size: 110%;
+	padding-bottom: 4px;
+	padding-top: 5px;
+}
+
+th.markdownTableHeadLeft, td.markdownTableBodyLeft {
+	text-align: left
+}
+
+th.markdownTableHeadRight, td.markdownTableBodyRight {
+	text-align: right
+}
+
+th.markdownTableHeadCenter, td.markdownTableBodyCenter {
+	text-align: center
+}

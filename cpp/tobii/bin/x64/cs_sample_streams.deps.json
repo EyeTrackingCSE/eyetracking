@@ -1,0 +1,40 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.0/win-x64",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.0": {},
+    ".NETCoreApp,Version=v2.0/win-x64": {
+      "cs_sample_streams/1.0.0": {
+        "dependencies": {
+          "tobii_interaction_lib_cs": "1.0.2.1"
+        },
+        "runtime": {
+          "cs_sample_streams.dll": {}
+        }
+      },
+      "tobii_interaction_lib_cs/1.0.2.1": {
+        "runtime": {
+          "tobii_interaction_lib_cs.dll": {
+            "assemblyVersion": "1.0.2.1",
+            "fileVersion": "1.0.2.1"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "cs_sample_streams/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "tobii_interaction_lib_cs/1.0.2.1": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
