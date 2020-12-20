@@ -23,7 +23,7 @@ void Method(const FunctionCallbackInfo<Value>& args) {
 
     // setup ids and rectangles that define the interactors we want to use (one in each corner of the screen),
     // then add them to the interaction library
-    constexpr IL::InteractorId idA = 0;
+    constexpr IL::InteractorId idA = 'a';
     constexpr IL::InteractorId idB = 1;
     constexpr IL::InteractorId idC = 2;
     constexpr IL::InteractorId idD = 3;
