@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 #include <node.h>
+#include <v8.h>
 #include <node_object_wrap.h>
 #include <interaction_lib/InteractionLib.h>
 #include <interaction_lib/misc/InteractionLibPtr.h>

@@ -13,4 +13,10 @@ printScreen(screen);
 
 // Make a rectangle of 500x500 on the top left of the screen
 let id = 0;
-screen.AddRectangle(0, 0, 0, 500, 500);
+let size = 500;
+screen.AddRectangle(0, 0, 0, size, size);
+screen.AddRectangle(1, screen.GetWidth() - size, 0, size, size);
+screen.AddRectangle(2, 0, screen.GetHeight() - size, 500, 500);
+screen.AddRectangle(3, screen.GetWidth() - size, screen.GetHeight() - size, 500, 500);
+
+screen.Listen();

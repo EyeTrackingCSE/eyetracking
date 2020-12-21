@@ -40,6 +40,7 @@ void Screen::Init(v8::Local<v8::Object> exports)
     NODE_SET_PROTOTYPE_METHOD(tpl, "GetWidth", Screen::GetWidth);
     NODE_SET_PROTOTYPE_METHOD(tpl, "SetWidth", Screen::SetWidth);
     NODE_SET_PROTOTYPE_METHOD(tpl, "AddRectangle", Screen::AddRectangle);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "Listen", Screen::Listen);
 
     v8::Local<v8::Function> construct = tpl->GetFunction(context).ToLocalChecked();
     addon_data->SetInternalField(0, construct);
@@ -202,17 +203,38 @@ void Screen::AddRectangle(const v8::FunctionCallbackInfo<v8::Value> &args)
 void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
 {
     v8::Isolate *isolate = args.GetIsolate();
+
+    Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
+    struct Focus
+    {
+        IL::InteractorId id = IL::EmptyInteractorId();
+        size_t count = 0;
+    };
+    Focus focus;
+    s->tobii->SubscribeGazeFocusEvents([](IL::GazeFocusEvent evt, void *ctx) {
+        Focus &focus = *static_cast<Focus *>(ctx);
+        std::cout
+            << "Interactor: " << evt.id
+            << ", focused: " << std::boolalpha << evt.hasFocus
+            << ", timestamp: " << evt.timestamp_us << " us"
+            << "\n";
+
+        if (evt.hasFocus)
+        {
+            focus.count = focus.id == evt.id ? focus.count + 1 : 1;
+            focus.id = evt.id;
+        }
+    },
+                                       &focus);
+
+    std::cout << "Starting interaction library update loop.\n";
+
+    constexpr size_t max_focus_count = 3;
+
+    while (focus.count < max_focus_count)
+    {
+        s->tobii->WaitAndUpdate();
+    }
+
+    std::cout << "Interactor " << focus.id << " got focused " << focus.count << " times\n";
 }
-
-// void Screen::AddRectangle(float x, float y, float w, float h, int id)
-// {
-//     IL::InteractorId rect_id = id;
-
-//     IL::Rectangle rect = {x, y, w, h};
-
-//     Screen::tobii->BeginInteractorUpdates();
-
-//     Screen::tobii->AddOrUpdateInteractor(rect_id, rect, 0.0f);
-
-//     Screen::tobii->CommitInteractorUpdates();
-// }
