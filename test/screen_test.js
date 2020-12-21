@@ -1,4 +1,4 @@
-const addon = require('../cpp/build/Release/focus.node');
+const Screen = require('../index');
 
 function printScreen(screen) {
     console.log(`W ${screen.GetWidth()}`);
@@ -7,7 +7,7 @@ function printScreen(screen) {
 
 console.log("Screen test");
 
-const screen = new addon.Screen(1920.0, 1080.0);
+const screen = new Screen(1920.0, 1080.0);
 
 printScreen(screen);
 

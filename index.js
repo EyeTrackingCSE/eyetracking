@@ -1,1 +1,1 @@
-// TODO
+module.exports = require('./cpp/build/Release/focus.node').Screen;
