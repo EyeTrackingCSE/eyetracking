@@ -39,6 +39,7 @@ void Screen::Init(v8::Local<v8::Object> exports)
     NODE_SET_PROTOTYPE_METHOD(tpl, "SetHeight", Screen::SetHeight);
     NODE_SET_PROTOTYPE_METHOD(tpl, "GetWidth", Screen::GetWidth);
     NODE_SET_PROTOTYPE_METHOD(tpl, "SetWidth", Screen::SetWidth);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "AddRectangle", Screen::AddRectangle);
 
     v8::Local<v8::Function> construct = tpl->GetFunction(context).ToLocalChecked();
     addon_data->SetInternalField(0, construct);
@@ -130,10 +131,10 @@ void Screen::GetWidth(const v8::FunctionCallbackInfo<v8::Value> &args)
  * */
 void Screen::SetWidth(const v8::FunctionCallbackInfo<v8::Value> &args)
 {
-    v8::Isolate * isolate = args.GetIsolate();
+    v8::Isolate *isolate = args.GetIsolate();
     v8::Local<v8::Context> ctx = isolate->GetCurrentContext();
 
-    Screen * s = ObjectWrap::Unwrap<Screen>(args.Holder());
+    Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
 
     float w = 0.0f;
     if (!args[0]->IsUndefined())
@@ -142,13 +143,65 @@ void Screen::SetWidth(const v8::FunctionCallbackInfo<v8::Value> &args)
     s->width = w;
 }
 
-void Screen::AddRectangle(const v8::FunctionCallbackInfo<v8::Value>& args) {
+/**
+ * Add a rectangle to the rectangle vector.
+ * This rectangle will listen to focus events from tobii sdk.
+ * 
+ * params
+ * id       int32
+ * x        number
+ * y        number
+ * width    number
+ * height   number
+ * 
+ * x and y are the coordinates of the top left corner of the rectangle.    
+ * */
+void Screen::AddRectangle(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate *isolate = args.GetIsolate();
+    v8::Local<v8::Context> ctx = isolate->GetCurrentContext();
 
+    Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
+
+    // Extract the params
+    int id;
+    float x, y, w, h;
+
+    // Id
+    if (!args[0]->IsUndefined())
+        id = args[0]->Int32Value(ctx).FromMaybe(0);
+
+    // x
+    if (!args[1]->IsUndefined())
+        x = args[1]->NumberValue(ctx).FromMaybe(0);
+
+    // y
+    if (!args[2]->IsUndefined())
+        y = args[2]->NumberValue(ctx).FromMaybe(0);
+
+    // width
+    if (!args[3]->IsUndefined())
+        w = args[3]->NumberValue(ctx).FromMaybe(0);
+
+    // height
+    if (!args[4]->IsUndefined())
+        h = args[4]->NumberValue(ctx).FromMaybe(0);
+
+    // Cast the prams to a IL::Rectangle
+    IL::InteractorId rect_id = id;
+    IL::Rectangle rect = {x, y, w, h};
+
+    // Push the rectangle to the update queue
+    s->tobii->BeginInteractorUpdates();
+
+    s->tobii->AddOrUpdateInteractor(rect_id, rect, 0.0f);
+
+    s->tobii->CommitInteractorUpdates();
 }
 
 void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
 {
-    v8::Isolate * isolate = args.GetIsolate();
+    v8::Isolate *isolate = args.GetIsolate();
 }
 
 // void Screen::AddRectangle(float x, float y, float w, float h, int id)
