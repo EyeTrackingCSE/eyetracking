@@ -4,7 +4,8 @@
   "description": "A library for detecting when the users eyesight focuses on specific screen coordinates.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildcpp": "cd ./cpp && node-gyp configure build"
   },
   "author": "",
   "license": "ISC"

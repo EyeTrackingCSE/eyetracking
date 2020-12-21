@@ -138,6 +138,9 @@
     <ClCompile Include="..\main.cc">
       <ObjectFileName>$(IntDir)\main.obj</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\screen.cc">
+      <ObjectFileName>$(IntDir)\screen.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="C:\Users\antho\AppData\Roaming\npm\node_modules\node-gyp\src\win_delay_load_hook.cc"/>
   </ItemGroup>
   <ItemGroup>

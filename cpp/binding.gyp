@@ -3,7 +3,8 @@
     {
       "target_name": "focus",
       "sources": [
-        "main.cc"
+        "main.cc",
+        "screen.cc"
       ],
       "conditions": [
         [

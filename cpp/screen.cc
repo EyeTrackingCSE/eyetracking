@@ -13,6 +13,8 @@ Screen::Screen(float w, float h)
     Screen::tobii->CoordinateTransformSetOriginOffset(Screen::offset, Screen::offset);
 }
 
+Screen::~Screen() {}
+
 /**
  * Binds the Screen object to v8, so it can be created
  * from a node process.
@@ -27,12 +29,20 @@ void Screen::Init(v8::Local<v8::Object> exports)
     addon_data_tpl->SetInternalFieldCount(5);
     v8::Local<v8::Object> addon_data = addon_data_tpl->NewInstance(context).ToLocalChecked();
 
-    // Tie the Screen constructor to Screen::New
+    // Template function for Screen::New
     v8::Local<v8::FunctionTemplate> tpl = v8::FunctionTemplate::New(isolate, Screen::New, addon_data);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Screen").ToLocalChecked());
+    tpl->InstanceTemplate()->SetInternalFieldCount(2);
 
     // Set Screen prototype functions
-    NODE_SET_PROTOTYPE_METHOD(tpl, "GetHeight()", Screen::GetHeight);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "GetHeight", Screen::GetHeight);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "SetHeight", Screen::SetHeight);
+
+    v8::Local<v8::Function> construct = tpl->GetFunction(context).ToLocalChecked();
+    addon_data->SetInternalField(0, construct);
+
+    v8::Local<v8::String> object_name = v8::String::NewFromUtf8(isolate, "Screen").ToLocalChecked();
+    exports->Set(context, object_name, construct).FromJust();
 }
 
 /**
@@ -62,11 +72,15 @@ void Screen::New(const v8::FunctionCallbackInfo<v8::Value> &args)
     if (!args[1]->IsUndefined())
         h = args[1]->NumberValue(context).FromMaybe(0.0f);
 
-    Screen * s = new Screen(w, h);
+    // Return the Screen instance
+    Screen *s = new Screen(w, h);
     s->Wrap(args.This());
     args.GetReturnValue().Set(args.This());
 }
 
+/**
+ * Return the Screen::height;
+ */
 void Screen::GetHeight(const v8::FunctionCallbackInfo<v8::Value> &args)
 {
     v8::Isolate *isolate = args.GetIsolate();
@@ -76,6 +90,23 @@ void Screen::GetHeight(const v8::FunctionCallbackInfo<v8::Value> &args)
     v8::Local<v8::Number> height = v8::Number::New(isolate, s->height);
 
     args.GetReturnValue().Set(height);
+}
+
+/**
+ * Set Screen::Height
+ */
+void Screen::SetHeight(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate *isolate = args.GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
+    Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
+
+    float h = 0.0f;
+    if (!args[0]->IsUndefined())
+        h = args[0]->NumberValue(context).FromMaybe(0.0f);
+
+    s->height = h;
 }
 
 void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
