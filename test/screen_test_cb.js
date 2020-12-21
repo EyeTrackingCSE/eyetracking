@@ -22,7 +22,6 @@ let array = [
 screen.AddRectangles(array);
 
 screen.Listen((id, hasFocus, timestamp) => {
-    console.log("now got here");
     console.log(`
         id: ${id},
         hasFocus: ${hasFocus},
