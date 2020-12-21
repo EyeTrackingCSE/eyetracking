@@ -275,38 +275,45 @@ void Screen::AddRectangles(const v8::FunctionCallbackInfo<v8::Value> &args)
 void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
 {
     v8::Isolate *isolate = args.GetIsolate();
+    v8::Local<v8::Context> ctx = isolate->GetCurrentContext();
 
     Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
-    struct Focus
-    {
-        IL::InteractorId id = IL::EmptyInteractorId();
-        size_t count = 0;
-    };
-    Focus focus;
-    s->tobii->SubscribeGazeFocusEvents([](IL::GazeFocusEvent evt, void *ctx) {
-        Focus &focus = *static_cast<Focus *>(ctx);
-        std::cout
-            << "Interactor: " << evt.id
-            << ", focused: " << std::boolalpha << evt.hasFocus
-            << ", timestamp: " << evt.timestamp_us << " us"
-            << "\n";
 
-        if (evt.hasFocus)
-        {
-            focus.count = focus.id == evt.id ? focus.count + 1 : 1;
-            focus.id = evt.id;
-        }
+    // The arg has to be a function for this to work.
+    if (!args[0]->IsFunction())
+    {
+        std::cout << "argument must be a function" << std::endl;
+        return;
+    }
+
+    // For passing the isolate and context to the Gaze callback.
+    v8::Local<v8::Function> callback = v8::Local<v8::Function>::Cast(args[0]);
+    struct V8Scope
+    {
+        v8::Isolate *isolate;
+        v8::Local<v8::Context> ctx;
+        v8::Local<v8::Function> cb;
+    };
+    V8Scope scope = {isolate, ctx, callback};
+    
+    s->tobii->SubscribeGazeFocusEvents([](IL::GazeFocusEvent evt, void *gcontext) {
+        V8Scope &scope = *static_cast<V8Scope *>(gcontext);
+        const unsigned int argc = 3;
+
+        v8::Local<v8::Value> argv[argc] = {
+            v8::Integer::New(scope.isolate, evt.id),
+            v8::Boolean::New(scope.isolate, evt.hasFocus),
+            v8::Integer::New(scope.isolate, evt.timestamp_us)
+        };
+
+        scope.cb->Call(scope.ctx, Null(scope.isolate), argc, argv).ToLocalChecked();
     },
-                                       &focus);
+                                       &scope);
 
     std::cout << "Starting interaction library update loop.\n";
 
-    constexpr size_t max_focus_count = 3;
-
-    while (focus.count < max_focus_count)
+    while (true)
     {
         s->tobii->WaitAndUpdate();
     }
-
-    std::cout << "Interactor " << focus.id << " got focused " << focus.count << " times\n";
 }

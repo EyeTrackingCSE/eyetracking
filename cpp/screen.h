@@ -35,7 +35,6 @@ private:
 
     static void AddRectangle(const v8::FunctionCallbackInfo<v8::Value> &args);
     static void AddRectangles(const v8::FunctionCallbackInfo<v8::Value> &args);
-    static void ClearRectangles(const v8::FunctionCallbackInfo<v8::Value> &args);
 
     static void Listen(const v8::FunctionCallbackInfo<v8::Value> &args);
 
