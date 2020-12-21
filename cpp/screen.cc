@@ -37,6 +37,8 @@ void Screen::Init(v8::Local<v8::Object> exports)
     // Set Screen prototype functions
     NODE_SET_PROTOTYPE_METHOD(tpl, "GetHeight", Screen::GetHeight);
     NODE_SET_PROTOTYPE_METHOD(tpl, "SetHeight", Screen::SetHeight);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "GetWidth", Screen::GetWidth);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "SetWidth", Screen::SetWidth);
 
     v8::Local<v8::Function> construct = tpl->GetFunction(context).ToLocalChecked();
     addon_data->SetInternalField(0, construct);
@@ -107,6 +109,37 @@ void Screen::SetHeight(const v8::FunctionCallbackInfo<v8::Value> &args)
         h = args[0]->NumberValue(context).FromMaybe(0.0f);
 
     s->height = h;
+}
+
+/**
+ * Set the Screen::width
+ * */
+void Screen::GetWidth(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate *isolate = args.GetIsolate();
+
+    Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
+
+    v8::Local<v8::Number> width = v8::Number::New(isolate, s->width);
+
+    args.GetReturnValue().Set(width);
+}
+
+/**
+ * Set the Screen::Width
+ * */
+void Screen::SetWidth(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate * isolate = args.GetIsolate();
+    v8::Local<v8::Context> ctx = isolate->GetCurrentContext();
+
+    Screen * s = ObjectWrap::Unwrap<Screen>(args.Holder());
+
+    float w = 0.0f;
+    if (!args[0]->IsUndefined())
+        w = args[0]->NumberValue(ctx).FromMaybe(0.0f);
+
+    s->width = w;
 }
 
 void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
