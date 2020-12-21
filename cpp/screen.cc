@@ -32,7 +32,7 @@ void Screen::Init(v8::Local<v8::Object> exports)
     // Template function for Screen::New
     v8::Local<v8::FunctionTemplate> tpl = v8::FunctionTemplate::New(isolate, Screen::New, addon_data);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Screen").ToLocalChecked());
-    tpl->InstanceTemplate()->SetInternalFieldCount(2);
+    tpl->InstanceTemplate()->SetInternalFieldCount(5);
 
     // Set Screen prototype functions
     NODE_SET_PROTOTYPE_METHOD(tpl, "GetHeight", Screen::GetHeight);
@@ -142,29 +142,14 @@ void Screen::SetWidth(const v8::FunctionCallbackInfo<v8::Value> &args)
     s->width = w;
 }
 
-void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
-{
+void Screen::AddRectangle(const v8::FunctionCallbackInfo<v8::Value>& args) {
+
 }
 
-// float Screen::GetHeight()
-// {
-//     return Screen::height;
-// }
-
-// void Screen::SetHeight(float h)
-// {
-//     Screen::height = h;
-// }
-
-// float Screen::GetWidth()
-// {
-//     return Screen::width;
-// }
-
-// void Screen::SetWidth(float w)
-// {
-//     Screen::width = w;
-// }
+void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate * isolate = args.GetIsolate();
+}
 
 // void Screen::AddRectangle(float x, float y, float w, float h, int id)
 // {
