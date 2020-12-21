@@ -8,7 +8,7 @@ This enables Node.js to detect when the user focuses their gaze in certain regio
 
 ## Example
 
-Example using a 1920x1080p screen, and creating 4 500x500 rectangles on each corner of the screen space. The EyeTracking module will detect when the user focuses their gaze on these regions, and executes a callback function.
+Example using a 1920x1080 screen, and creating 4 500x500 rectangles on each corner of the screen space. The eyetracking module will detect when the user focuses their gaze on these regions, and executes the provided callback function.
 
 ```
 A screen with 4 "corner" interactors A, B, C and D:
@@ -31,7 +31,7 @@ A screen with 4 "corner" interactors A, B, C and D:
 ```javascript
 const eyetracking = require('eyetracking');
 
-let width = 1920.0;
+let width = 1920;
 let height = 1080;
 const screen = new eyetracking(width, height);
 

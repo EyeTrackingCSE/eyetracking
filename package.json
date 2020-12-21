@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildcpp": "cd ./cpp && node-gyp configure build"
+    "install": "cd ./cpp && node-gyp configure build"
   },
   "author": "Anthony A. Vardaro",
   "license": "ISC"
