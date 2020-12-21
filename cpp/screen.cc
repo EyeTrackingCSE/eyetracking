@@ -40,6 +40,7 @@ void Screen::Init(v8::Local<v8::Object> exports)
     NODE_SET_PROTOTYPE_METHOD(tpl, "GetWidth", Screen::GetWidth);
     NODE_SET_PROTOTYPE_METHOD(tpl, "SetWidth", Screen::SetWidth);
     NODE_SET_PROTOTYPE_METHOD(tpl, "AddRectangle", Screen::AddRectangle);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "AddRectangles", Screen::AddRectangles);
     NODE_SET_PROTOTYPE_METHOD(tpl, "Listen", Screen::Listen);
 
     v8::Local<v8::Function> construct = tpl->GetFunction(context).ToLocalChecked();
@@ -196,6 +197,77 @@ void Screen::AddRectangle(const v8::FunctionCallbackInfo<v8::Value> &args)
     s->tobii->BeginInteractorUpdates();
 
     s->tobii->AddOrUpdateInteractor(rect_id, rect, 0.0f);
+
+    s->tobii->CommitInteractorUpdates();
+}
+
+/**
+ * Enables user to bulk insert an array of rectangles.
+ * */
+void Screen::AddRectangles(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate *isolate = args.GetIsolate();
+    v8::Local<v8::Context> ctx = isolate->GetCurrentContext();
+
+    Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
+
+    // The arg needs to be an array of objects for this function to work.
+    if (!args[0]->IsArray())
+    {
+        std::cout << "Argument is not an array" << std::endl;
+        return;
+    }
+
+    // Cast the array
+    v8::Local<v8::Array> array = v8::Local<v8::Array>::Cast(args[0]);
+    unsigned int length = array->Length();
+
+    /*
+    * 1. Iterate over objects in the array
+    * 2. Extract each property of each object to a local variable
+    * 3. Create a new instance of IL::Rectangle
+    * 4. Push the new IL::Rectangle to the tobii update queue.
+    */
+    v8::Local<v8::Object> cur;
+    IL::Rectangle rect;
+    int id;
+    float x, y, w, h;
+
+    s->tobii->BeginInteractorUpdates();
+
+    for (unsigned int i = 0; i < length; i++)
+    {
+        cur = v8::Local<v8::Object>::Cast(array->Get(ctx, i).ToLocalChecked());
+
+        id = cur->Get(ctx, v8::String::NewFromUtf8(isolate, "id").ToLocalChecked())
+                 .ToLocalChecked()
+                 ->IntegerValue(ctx)
+                 .ToChecked();
+
+        x = cur->Get(ctx, v8::String::NewFromUtf8(isolate, "x").ToLocalChecked())
+                .ToLocalChecked()
+                ->NumberValue(ctx)
+                .ToChecked();
+
+        y = cur->Get(ctx, v8::String::NewFromUtf8(isolate, "y").ToLocalChecked())
+                .ToLocalChecked()
+                ->NumberValue(ctx)
+                .ToChecked();
+
+        w = cur->Get(ctx, v8::String::NewFromUtf8(isolate, "width").ToLocalChecked())
+                .ToLocalChecked()
+                ->NumberValue(ctx)
+                .ToChecked();
+
+        h = cur->Get(ctx, v8::String::NewFromUtf8(isolate, "height").ToLocalChecked())
+                .ToLocalChecked()
+                ->NumberValue(ctx)
+                .ToChecked();
+
+        rect = {x, y, w, h};
+
+        s->tobii->AddOrUpdateInteractor(id, rect, 0.0f);
+    }
 
     s->tobii->CommitInteractorUpdates();
 }

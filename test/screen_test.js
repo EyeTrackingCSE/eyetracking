@@ -12,7 +12,6 @@ const screen = new Screen(1920.0, 1080.0);
 printScreen(screen);
 
 // Make a rectangle of 500x500 on the top left of the screen
-let id = 0;
 let size = 500;
 screen.AddRectangle(0, 0, 0, size, size);
 screen.AddRectangle(1, screen.GetWidth() - size, 0, size, size);
