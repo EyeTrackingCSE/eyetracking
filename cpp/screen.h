@@ -9,6 +9,8 @@
 #include <iostream>
 #include <node.h>
 #include <v8.h>
+#include <uv.h>
+
 #include <node_object_wrap.h>
 #include <interaction_lib/InteractionLib.h>
 #include <interaction_lib/misc/InteractionLibPtr.h>
@@ -37,6 +39,8 @@ private:
     static void AddRectangles(const v8::FunctionCallbackInfo<v8::Value> &args);
 
     static void Listen(const v8::FunctionCallbackInfo<v8::Value> &args);
+    static void ListenAsync(const v8::FunctionCallbackInfo<v8::Value> &args);
+
 
 public:
     static void Init(v8::Local<v8::Object> exports);

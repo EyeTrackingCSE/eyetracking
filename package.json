@@ -8,5 +8,16 @@
     "install": "cd ./cpp && node-gyp configure build"
   },
   "author": "Anthony A. Vardaro",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EyeTrackingCSE/focus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EyeTrackingCSE/focus/issues"
+  },
+  "homepage": "https://github.com/EyeTrackingCSE/focus#readme"
 }

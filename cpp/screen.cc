@@ -295,7 +295,7 @@ void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
         v8::Local<v8::Function> cb;
     };
     V8Scope scope = {isolate, ctx, callback};
-    
+
     s->tobii->SubscribeGazeFocusEvents([](IL::GazeFocusEvent evt, void *gcontext) {
         V8Scope &scope = *static_cast<V8Scope *>(gcontext);
         const unsigned int argc = 3;
@@ -303,8 +303,7 @@ void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
         v8::Local<v8::Value> argv[argc] = {
             v8::Integer::New(scope.isolate, evt.id),
             v8::Boolean::New(scope.isolate, evt.hasFocus),
-            v8::Integer::New(scope.isolate, evt.timestamp_us)
-        };
+            v8::Integer::New(scope.isolate, evt.timestamp_us)};
 
         scope.cb->Call(scope.ctx, Null(scope.isolate), argc, argv).ToLocalChecked();
     },
@@ -312,8 +311,34 @@ void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
 
     std::cout << "Starting interaction library update loop.\n";
 
+    // cursed loop
     while (true)
     {
         s->tobii->WaitAndUpdate();
     }
+}
+
+/**
+ * Listen function with async
+ * */
+void Screen::ListenAsync(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate *isolate = args.GetIsolate();
+    v8::Local<v8::Context> ctx = isolate->GetCurrentContext();
+
+
+    struct V8ScopeAsync
+    {
+        v8::Isolate *isolate;
+        v8::Local<v8::Context> ctx;
+        v8::Persistent<v8::Function> callback;
+
+        uv_work_t request;
+    };
+
+    V8ScopeAsync * scope = new V8ScopeAsync();
+
+
+
+    // Store the cb from JS into V8ScopeAsync
 }
