@@ -10,7 +10,8 @@
 #include <node.h>
 #include <v8.h>
 #include <uv.h>
-
+#include <thread>
+#include <chrono>
 #include <node_object_wrap.h>
 #include <interaction_lib/InteractionLib.h>
 #include <interaction_lib/misc/InteractionLibPtr.h>
