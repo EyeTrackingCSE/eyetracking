@@ -1,12 +1,12 @@
 {
-  "name": "eyetracking",
-  "version": "1.0.0",
-  "description": "Eye tracking in node.js",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "cd ./cpp && node-gyp configure build"
-  },
-  "author": "Anthony A. Vardaro",
-  "license": "ISC"
+    "name": "eyetracking",
+    "version": "1.0.1",
+    "description": "Eye tracking in node.js",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "install": "cd ./cpp && node-gyp configure build"
+    },
+    "author": "Anthony A. Vardaro",
+    "license": "ISC"
 }
