@@ -345,7 +345,7 @@ void Screen::ListenGazePoint(const v8::FunctionCallbackInfo<v8::Value> &args)
     V8Scope scope = {isolate, ctx, callback};
 
     s->tobii->SubscribeGazePointData([](IL::GazePointData evt, void *gcontext) {
-        if (evt.validity == IL::Validity::Valid)
+        if (evt.validity == IL::Validity::Invalid)
             return;
 
         V8Scope &scope = *static_cast<V8Scope *>(gcontext);
