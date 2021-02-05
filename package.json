@@ -1,27 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "eyetracking",
-  "version": "1.0.0",
-  "description": "Eye tracking in node.js",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "cd ./cpp && node-gyp configure build"
-  },
-  "author": "Anthony A. Vardaro",
-  "license": "ISC",
-  "directories": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/EyeTrackingCSE/focus.git"
-  },
-  "bugs": {
-    "url": "https://github.com/EyeTrackingCSE/focus/issues"
-  },
-  "homepage": "https://github.com/EyeTrackingCSE/focus#readme"
-=======
     "name": "eyetracking",
     "version": "2.0.0",
     "description": "Eye tracking in node.js",
@@ -31,6 +8,16 @@
         "install": "cd ./cpp && node-gyp configure build"
     },
     "author": "Anthony A. Vardaro",
-    "license": "ISC"
->>>>>>> 6f39831cdba6eb41c222cfdf6c927ccfd51574d2
+    "license": "ISC",
+    "directories": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/EyeTrackingCSE/focus.git"
+    },
+    "bugs": {
+        "url": "https://github.com/EyeTrackingCSE/focus/issues"
+    },
+    "homepage": "https://github.com/EyeTrackingCSE/focus#readme"
 }
