@@ -40,7 +40,7 @@ private:
     static void AddRectangles(const v8::FunctionCallbackInfo<v8::Value> &args);
 
     static void Listen(const v8::FunctionCallbackInfo<v8::Value> &args);
-    static void ListenAsync(const v8::FunctionCallbackInfo<v8::Value> &args);
+    static void ListenGazePoint(const v8::FunctionCallbackInfo<v8::Value> &args);
 
 
 public:

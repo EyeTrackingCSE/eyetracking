@@ -1,3 +1,4 @@
+
 #include "screen.h"
 
 Screen::Screen(float w, float h)
@@ -42,6 +43,8 @@ void Screen::Init(v8::Local<v8::Object> exports)
     NODE_SET_PROTOTYPE_METHOD(tpl, "AddRectangle", Screen::AddRectangle);
     NODE_SET_PROTOTYPE_METHOD(tpl, "AddRectangles", Screen::AddRectangles);
     NODE_SET_PROTOTYPE_METHOD(tpl, "Listen", Screen::Listen);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "ListenGazePoint", Screen::ListenGazePoint);
+
 
     v8::Local<v8::Function> construct = tpl->GetFunction(context).ToLocalChecked();
     addon_data->SetInternalField(0, construct);
@@ -298,7 +301,7 @@ void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
 
     s->tobii->SubscribeGazeFocusEvents([](IL::GazeFocusEvent evt, void *gcontext) {
         V8Scope &scope = *static_cast<V8Scope *>(gcontext);
-        const unsigned int argc = 4;
+        const unsigned int argc = 3;
 
         v8::Local<v8::Value> argv[argc] = {
             v8::Integer::New(scope.isolate, evt.id),
@@ -310,6 +313,55 @@ void Screen::Listen(const v8::FunctionCallbackInfo<v8::Value> &args)
                                        &scope);
 
     std::cout << "Starting interaction library update loop.\n";
+
+    while (true)
+    {
+        s->tobii->WaitAndUpdate();
+    }
+}
+
+void Screen::ListenGazePoint(const v8::FunctionCallbackInfo<v8::Value> &args)
+{
+    v8::Isolate *isolate = args.GetIsolate();
+    v8::Local<v8::Context> ctx = isolate->GetCurrentContext();
+
+    Screen *s = ObjectWrap::Unwrap<Screen>(args.Holder());
+
+    // The arg has to be a function for this to work.
+    if (!args[0]->IsFunction())
+    {
+        std::cout << "argument must be a function" << std::endl;
+        return;
+    }
+
+    // For passing the isolate and context to the Gaze callback.
+    v8::Local<v8::Function> callback = v8::Local<v8::Function>::Cast(args[0]);
+    struct V8Scope
+    {
+        v8::Isolate *isolate;
+        v8::Local<v8::Context> ctx;
+        v8::Local<v8::Function> cb;
+    };
+    V8Scope scope = {isolate, ctx, callback};
+
+    s->tobii->SubscribeGazePointData([](IL::GazePointData evt, void *gcontext) {
+        if (evt.validity == IL::Validity::Valid)
+            return;
+
+        V8Scope &scope = *static_cast<V8Scope *>(gcontext);
+        const unsigned int argc = 4;
+
+        v8::Local<v8::Value> argv[argc] = {
+            v8::Integer::New(scope.isolate, evt.x),
+            v8::Integer::New(scope.isolate, evt.y),
+            v8::Integer::New(scope.isolate, evt.validity),
+            v8::Integer::New(scope.isolate, evt.timestamp_us)};
+
+        scope.cb->Call(scope.ctx, Null(scope.isolate), argc, argv).ToLocalChecked();
+    },
+                                       &scope);
+
+    std::cout << "Starting interaction library gaze point data loop.\n";
 
     while (true)
     {
