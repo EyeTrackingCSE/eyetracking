@@ -1,6 +1,0 @@
-^C:\USERS\ANTHO\PROJECTS\SR\ADDONS\CPP\TOBII\LIB\X64\TOBII_INTERACTION_LIB.DLL
-call mkdir "C:\Users\antho\projects\sr\addons\cpp\build\Release" 2>nul & set ERRORLEVEL=0 & copy /Y "C:\Users\antho\projects\sr\addons\cpp\tobii\lib\x64\tobii_interaction_lib.dll" "C:\Users\antho\projects\sr\addons\cpp\build\Release\tobii_interaction_lib.dll"
-if %errorlevel% neq 0 exit /b %errorlevel%
-^C:\USERS\ANTHO\PROJECTS\SR\ADDONS\CPP\TOBII\LIB\X64\TOBII_STREAM_ENGINE.DLL
-call mkdir "C:\Users\antho\projects\sr\addons\cpp\build\Release" 2>nul & set ERRORLEVEL=0 & copy /Y "C:\Users\antho\projects\sr\addons\cpp\tobii\lib\x64\tobii_stream_engine.dll" "C:\Users\antho\projects\sr\addons\cpp\build\Release\tobii_stream_engine.dll"
-if %errorlevel% neq 0 exit /b %errorlevel%
